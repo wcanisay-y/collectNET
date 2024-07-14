@@ -120,7 +120,7 @@ ser.obj <- FindClusters(ser.obj,resolution=0.5)
 ### CellChat
 
 cellchat<- createCellChat(object =ser.obj, group.by = "Celltype")
-future::plan("multiprocess", workers = 50) # do parallel
+future::plan("multicore", workers = 50) # do parallel
 memory_size = 10
 options(future.globals.maxSize = memory_size*1000 * 1024^2) # 1024^2 = MB
 cellchat@DB <- CellChatDB.human
