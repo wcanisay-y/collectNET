@@ -1,22 +1,18 @@
-FROM rocker/r-ver:4.1.0
-
-RUN apt-get update && apt-get install -y wget bzip2 && \
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
-    bash miniconda.sh -b -p /opt/conda && \
-    rm miniconda.sh && \
-    /opt/conda/bin/conda init
-
-ENV PATH /opt/conda/bin:$PATH
-
-COPY environment.yml /app/environment.yml
-
-RUN conda env create -f /app/environment.yml
-
-RUN echo "conda activate scrna" >> ~/.bashrc
-ENV PATH /opt/conda/envs/scrna/bin:$PATH
-
-COPY . /app
+# FROM nvcr.io/nvidia/pytorch:20.10-py3
+FROM continuumio/miniconda3
 
 WORKDIR /app
 
-CMD ["Rscript", "inference.r"]
+COPY environment.yml .
+
+RUN conda env create -f environment.yml
+
+SHELL ["conda", "run", "-n", "collectnet", "/bin/bash", "-c"]
+# RUN conda env create -f environment.yml --verbose
+# RUN conda clean -afy
+
+# SHELL ["conda", "run", "-n", "collectnet", "/bin/bash", "-c"]
+
+COPY . .
+
+CMD ["Rscript", "infer.r", "default_value1", "default_value2", "default_value3"]
