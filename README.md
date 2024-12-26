@@ -22,3 +22,4 @@ Please refer to `tutorial.ipynb` for details.
 
 ## Citation
 
+Yan Pan, Zijing Gao, Xuejian Cui, Zhen Li, Rui Jiang, collectNET: a web server for integrated inference of cell–cell communication network, Database, Volume 2024, 2024, baae098, https://doi.org/10.1093/database/baae098
